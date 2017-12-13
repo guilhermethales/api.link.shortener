@@ -30,6 +30,6 @@ class CreateLinksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('links');
+        $this->schema->dropIfExists('links');
     }
 }

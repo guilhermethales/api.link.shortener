@@ -173,11 +173,18 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Units\Providers\AppServiceProvider::class,
-        App\Units\Providers\AuthServiceProvider::class,
-        // App\Units\Providers\BroadcastServiceProvider::class,
-        App\Units\Providers\EventServiceProvider::class,
-        App\Units\Providers\RouteServiceProvider::class,
+        App\Units\Core\Providers\AppServiceProvider::class,
+        App\Units\Core\Providers\AuthServiceProvider::class,
+        // App\Units\Core\Providers\BroadcastServiceProvider::class,
+        App\Units\Core\Providers\EventServiceProvider::class,
+
+				// Domains
+				App\Domains\Users\Providers\MigrationServiceProvider::class,
+				App\Domains\Links\Providers\MigrationServiceProvider::class,
+
+				//Units
+				App\Units\Users\Providers\RouteServiceProvider::class,
+				App\Units\Links\Providers\RouteServiceProvider::class,
 
 
     ],

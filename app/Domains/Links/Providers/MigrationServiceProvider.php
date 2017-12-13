@@ -13,8 +13,7 @@ class MigrationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->migrations([
-            CreateOrdersTable::class,
-            CreateProductsTable::class,
+            CreateLinksTable::class
         ]);
     }
 }
