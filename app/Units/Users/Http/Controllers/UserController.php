@@ -5,7 +5,9 @@ namespace App\Units\Users\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Support\Http\Controller;
 use App\Units\Users\Http\Requests\CreateUserRequest;
+use App\Units\Users\Http\Requests\UpdateUserRequest;
 use App\Domains\Users\User;
+use App\Domains\Users\Repositories\UserRepository;
 
 class UserController extends Controller
 {
@@ -25,9 +27,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request, User $user)
+    public function store(CreateUserRequest $request, UserRepository $user)
     {
-        return $user->create($request->all());
+        $data = $request->all();
+				$user = $repository->create($data);
+
+				if($user) {
+					return response()->json($link);
+				}
+
+				return response()->json('Falha', 422);
     }
 
     /**
@@ -36,9 +45,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, UserRepository $user)
     {
-        //
+        $data = $user->find($id);
     }
 
     /**
@@ -48,9 +57,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, UpdateUserRequest $request, UserRepository $user)
     {
-        //
+        $user = $request->find($id);
+				if(!$user) {
+					return response()->json('Usuário não encontrado!');
+				}
+				
+				$data = $request->all();
+				$repository->update($user, $data);
+
+				return response()->json($user);
     }
 
     /**

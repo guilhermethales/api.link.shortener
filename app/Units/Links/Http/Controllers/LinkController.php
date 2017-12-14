@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Support\Http\Controller;
 use App\Units\Links\Http\Requests\CreateLinkRequest;
 use App\Domains\Links\Link;
+use App\Domains\Links\Repositories\LinkRepository;
 
 class LinkController extends Controller
 {
@@ -25,12 +26,16 @@ class LinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateLinkRequest $request)
+    public function store(CreateLinkRequest $request, LinkRepository $repository)
     {
-				$link = new Link();
-        $link->fill($$request->all());
-				$link->user_id = 1;
-				return $link->save();
+				$data = $request->all();
+				$link = $repository->create($data);
+
+				if($link) {
+					return response()->json($link);
+				}
+
+				return response()->json('Falha', 422);
     }
 
     /**

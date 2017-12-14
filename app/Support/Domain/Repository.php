@@ -11,9 +11,15 @@ abstract class Repository
 	public function makeModel() {
 		return $this->model = app()->make($this->modelClass);
 	}
+
 	public function all(){
 		$model = $this->makeModel();
 		return $model->get();
+	}
+
+	public function find(){
+		$model = $this->makeModel();
+		return $model->find($id);
 	}
 
 	public function create(array $data = []){
